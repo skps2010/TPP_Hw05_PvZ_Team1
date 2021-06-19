@@ -153,3 +153,5 @@ const String operator+(const String &lhs, const String &rhs)
     tmp += rhs;
     return tmp;
 }
+
+//cool

@@ -61,3 +61,5 @@ std::istream &operator>>(std::istream &is, String &in);
 const String operator+(const String &lhs, const String &rhs);
 
 #endif
+
+//cool
