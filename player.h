@@ -5,12 +5,14 @@
 class player
 {
 public:
-    player() : coin_(100){};
-    player(int const coin) : coin_(coin){};
-    ~player();
+    int Coin() const { return coin_; }
+    int Posotion() const { return position_; }
 
 private:
-    int coin_;
+    int coin_ = 150;
+    int position_ = 0;
 };
+
+std::ostream &operator<<(std::ostream &os, const player &out);
 
 #endif
