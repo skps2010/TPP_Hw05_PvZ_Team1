@@ -6,7 +6,9 @@ class player
 {
 public:
     int Coin() const { return coin_; }
-    int Posotion() const { return position_; }
+    void Cost(const int i) { coin_ -= i; }
+    int Position() const { return position_; }
+    void Step(const int i, const int row) { position_ = (position_ + i) % row; }
 
 private:
     int coin_ = 150;

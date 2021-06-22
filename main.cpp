@@ -10,4 +10,9 @@ int main()
 {
     map m;
     cout << m;
+    for (int i = 0; i < 3; i++)
+    {
+        m.EveryoneMove();
+        cout << m;
+    }
 }

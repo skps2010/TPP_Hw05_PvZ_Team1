@@ -20,6 +20,7 @@ public:
     void PrintPlayer() const;
     void PrintRow(const int i) const;
     void PrintZombie(const int i) const;
+    void EveryoneMove();
 
 private:
     int row_ = 8;

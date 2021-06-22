@@ -17,6 +17,7 @@ public:
     int DamagePoint() const { return damage_point_; }
     int LifePoint() const { return life_point_; }
     int Position() const { return position_; }
+    void Step(const int i, const int row) { position_ = (position_ + i) % row; }
 
 private:
     static int count_;

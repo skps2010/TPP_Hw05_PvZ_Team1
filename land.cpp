@@ -4,7 +4,7 @@ using namespace std;
 
 std::ostream &operator<<(std::ostream &os, const land &out)
 {
-    if (out.PlantId() == -1)
+    if (out.Plant() == -1)
     {
         cout << "Empty";
     }

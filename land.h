@@ -6,10 +6,10 @@ class land
 {
 public:
     void SetPlant(int type);
-    int PlantId() const { return plantid_; }
+    int Plant() const { return plant_; }
 
 private:
-    int plantid_ = -1; //default: Empty
+    int plant_ = -1; //default: Empty
     //plant
 };
 
