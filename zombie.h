@@ -7,9 +7,9 @@ class zombie
 public:
     zombie()
     {
+        id_ = idcount_;
         count_ += 1;
         idcount_ += 1;
-        id_ = idcount_;
     }
     ~zombie() { count_ -= 1; }
     static int Count() { return count_; }
@@ -17,7 +17,9 @@ public:
     int DamagePoint() const { return damage_point_; }
     int LifePoint() const { return life_point_; }
     int Position() const { return position_; }
+    bool isDead() const { return (life_point_ <= 0); }
     void Step(const int i, const int row) { position_ = (position_ + i) % row; }
+    void Hurt(const int hp);
 
 private:
     static int count_;

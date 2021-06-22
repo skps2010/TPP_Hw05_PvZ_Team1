@@ -1,5 +1,4 @@
 #include <iostream>
-#include <stdlib.h> // for rand
 #include "map.h"
 using namespace std;
 
@@ -14,37 +13,66 @@ void map::PrintRow(const int i) const
     cout << '<' << (player_.Position() == i ? '*' : ' ');
     for (int j = 0; j < Zombiecnt(); j++)
     {
-        if (zombie_[j].Position() == i)
-            cout << j;
-        else
-            cout << ' ';
+        if (!zombie_[j].isDead())
+        {
+            if (zombie_[j].Position() == i)
+                cout << j;
+            else
+                cout << ' ';
+        }
     }
     cout << '>';
     cout << land_[i] << "\n";
 }
 
-void map::PrintZombie(const int i) const
+void map::PrintZombie(const int id) const
 {
-    cout << zombie_[i] << "\n";
+    if (!zombie_[id].isDead())
+        cout << zombie_[id] << "\n";
 }
 
-void map::EveryoneMove()
+int map::ZombieMove(const int id, const int step)
 {
-    for (int i = 0; i < zombiecnt_; i++)
-        zombie_[i].Step(rand() % 3 + 1, row_);
-    player_.Step(rand() % 3 + 1, row_);
+    zombie_[id].Step(step, row_);
+    return zombie_[id].Position();
+}
+
+int map::ZombiePosition(const int id)
+{
+    return zombie_[id].Position();
+}
+
+int map::PlayerMove(const int step)
+{
+    player_.Step(step, row_);
+    return player_.Position();
+}
+
+int map::PlayerPosition()
+{
+    return player_.Position();
+}
+
+void map::PAttackZ(int row, int zid)
+{
+    int tmp = land_[row].PlantDP();
+    zombie_[zid].Hurt(tmp);
+}
+
+void map::ZAttackP(int row, int zid)
+{
+    int tmp = zombie_[zid].DamagePoint();
+    land_[row].PlantHurt(tmp);
 }
 
 std::ostream &operator<<(std::ostream &os, const map &out)
 {
-    for (int i = 0; i < out.Row(); i++)
+    for (int i = 0; i < out.Landcnt(); i++)
         out.PrintRow(i);
     cout << string(50, '-') << "\n"
          << "Zombie information:\n";
     for (int i = 0; i < out.Zombiecnt(); i++)
         out.PrintZombie(i);
     cout << string(50, '=') << "\n";
-    //print plants
-    out.PrintPlayer();
     return os;
 }

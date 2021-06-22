@@ -15,12 +15,19 @@ public:
         delete[] land_;
         delete[] zombie_;
     }
-    int Row() const { return row_; }
+    int Landcnt() const { return row_; }
     int Zombiecnt() const { return zombiecnt_; }
+    bool ZombieisDead(const int id) const { return zombie_[id].isDead(); }
+    int Plantcnt() const { return 0; } // not done yet
     void PrintPlayer() const;
     void PrintRow(const int i) const;
-    void PrintZombie(const int i) const;
-    void EveryoneMove();
+    void PrintZombie(const int id) const;
+    int ZombieMove(const int id, const int step);
+    int ZombiePosition(const int id);
+    int PlayerMove(const int step);
+    int PlayerPosition();
+    void PAttackZ(int row, int zid);
+    void ZAttackP(int row, int zid);
 
 private:
     int row_ = 8;
