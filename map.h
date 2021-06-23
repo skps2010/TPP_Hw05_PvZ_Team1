@@ -29,6 +29,7 @@ public:
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);
     int PlayerCoin() const { return player_.Coin(); }
+    int Cost(const int m);
 
 private:
     int row_ = 8;
