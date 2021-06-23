@@ -28,6 +28,7 @@ public:
     int PlayerPosition();
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);
+    int PlayerCoin() const { return player_.Coin(); }
 
 private:
     int row_ = 8;
