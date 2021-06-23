@@ -23,11 +23,11 @@ private:
     static int healpoint_;
 };
 
-class Hornflower : public plant
+class ShootPlant : public plant
 {
 public:
     static void set(std::string name, int cost, int hp, int atk);
-    Hornflower();
+    ShootPlant();
     //virtual void visit() override ;
     virtual void visit() override {std::cout << "b" << std::endl;} //test
 private:
@@ -37,12 +37,12 @@ private:
     static int atk_;
 };
 
-class Bombflower : public plant
+class BombPlant : public plant
 {
 public:
     static void set(std::string name,int cost, int hp);
-    Bombflower();
-    ~Bombflower() ;
+    BombPlant();
+    ~BombPlant() ;
     static int showused() ;
 private:
     static std::string name_;
@@ -51,11 +51,11 @@ private:
     static int used_;
 };
 
-class Mushroom : public plant
+class CoinPlant : public plant
 {
 public:
     static void set(std::string name, int cost, int hp, int time, int coin);
-    Mushroom();
+    CoinPlant();
     //virtual void visit() override {std::cout << "c" << std::endl;}
 private:
     static std::string name_;
@@ -66,11 +66,11 @@ private:
     int time = 0;
 };
 
-class Healflower : public plant
+class HealPlant : public plant
 {
 public:
     static void set(std::string name, int cost, int hp, int healpoint);
-    Healflower();
+    HealPlant();
     //virtual void visit() override {std::cout << "c" << std::endl;}
 private:
     static std::string name_;
@@ -78,7 +78,7 @@ private:
     static int maxhp_;
 };
 
-plant* create(char c);
+plant* create(char type);
 
 bool alive (plant* pl);
 

@@ -6,37 +6,37 @@ using namespace std;
 
 int plant::healpoint_ = 20;
 
-string Hornflower::name_ = "Hornflower";
+string ShootPlant::name_ = "Hornflower";
 
-int Hornflower::cost_ = 50;
+int ShootPlant::cost_ = 50;
 
-int Hornflower::maxhp_ = 50;
+int ShootPlant::maxhp_ = 50;
 
-int Hornflower::atk_ = 10;
+int ShootPlant::atk_ = 10;
 
-string Bombflower::name_ = "Bombflower";
+string BombPlant::name_ = "Bombflower";
 
-int Bombflower::cost_ = 50;
+int BombPlant::cost_ = 50;
 
-int Bombflower::maxhp_ = 30;
+int BombPlant::maxhp_ = 30;
 
-int Bombflower::used_ = 0;
+int BombPlant::used_ = 0;
 
-string Mushroom::name_ = "Mushroom";
+string CoinPlant::name_ = "Mushroom";
 
-int Mushroom::cost_ = 25;
+int CoinPlant::cost_ = 25;
 
-int Mushroom::maxhp_ = 50;
+int CoinPlant::maxhp_ = 50;
 
-int Mushroom::maxtime_ = 2;
+int CoinPlant::maxtime_ = 2;
 
-int Mushroom::reward_ = 25;
+int CoinPlant::reward_ = 25;
 
-string Healflower::name_ = "Healflower";
+string HealPlant::name_ = "Healflower";
 
-int Healflower::cost_ = 25;
+int HealPlant::cost_ = 25;
 
-int Healflower::maxhp_ = 50;
+int HealPlant::maxhp_ = 50;
 
 plant::plant(string name,int cost,int maxhp,int atk) :name_(name), cost_(cost), maxhp_(maxhp), remainhp_(maxhp), atk_(atk)
 {
@@ -94,7 +94,7 @@ void plant::sethealpoint(int healpoint)
     healpoint_ = healpoint;
 }
 
-void Hornflower::set(string name, int cost, int hp, int atk)
+void ShootPlant::set(string name, int cost, int hp, int atk)
 {
     name_ = name;
     cost_ = cost;
@@ -102,35 +102,35 @@ void Hornflower::set(string name, int cost, int hp, int atk)
     atk_ = atk;
 }
 
-Hornflower::Hornflower(): plant(name_,cost_,maxhp_,atk_)
+ShootPlant::ShootPlant(): plant(name_,cost_,maxhp_,atk_)
 {
 
 }
 
 
-void Bombflower::set(string name,int cost, int hp)
+void BombPlant::set(string name,int cost, int hp)
 {
     name_ = name;
     cost_ = cost;
     maxhp_ = hp;
 }
 
-Bombflower::Bombflower(): plant(name_,cost_,maxhp_,maxhp_)
+BombPlant::BombPlant(): plant(name_,cost_,maxhp_,maxhp_)
 {
 
 }
 
-Bombflower::~Bombflower()
+BombPlant::~BombPlant()
 {
     used_+=1;
 }
 
-int Bombflower::showused()
+int BombPlant::showused()
 {
     return used_;
 }
 
-void Mushroom::set(string name, int cost, int hp, int time, int coin)
+void CoinPlant::set(string name, int cost, int hp, int time, int coin)
 {
     name_ = name;
     cost_ = cost;
@@ -139,12 +139,12 @@ void Mushroom::set(string name, int cost, int hp, int time, int coin)
     reward_ = coin;
 }
 
-Mushroom::Mushroom() : plant(name_,cost_,maxhp_,0)
+CoinPlant::CoinPlant() : plant(name_,cost_,maxhp_,0)
 {
 
 }
 
-void Healflower::set(string name, int cost, int hp, int healpoint)
+void HealPlant::set(string name, int cost, int hp, int healpoint)
 {
     name_ = name;
     cost_ = cost;
@@ -152,28 +152,28 @@ void Healflower::set(string name, int cost, int hp, int healpoint)
     sethealpoint(healpoint);
 }
 
-Healflower::Healflower() : plant(name_,cost_,maxhp_,0)
+HealPlant::HealPlant() : plant(name_,cost_,maxhp_,0)
 {
 
 }
 
 
-plant* create(char c)
+plant* create(char type)
 {
     plant* temp = nullptr;
-    switch(c)
+    switch(type)
     {
     case 'S':
-        temp = new Hornflower;
+        temp = new ShootPlant;
         break;
     case 'B':
-        temp = new Bombflower;
+        temp = new BombPlant;
         break;
     case 'C':
-        temp = new Mushroom;
+        temp = new CoinPlant;
         break;
     case 'H':
-        temp = new Healflower;
+        temp = new HealPlant;
         break;
     }
     return temp;
