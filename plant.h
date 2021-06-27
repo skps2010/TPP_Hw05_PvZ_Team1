@@ -12,7 +12,7 @@ public:
     int showhp() const;
     int showatk() const;
     virtual void showskill() const;
-    //virtual void visit();
+    virtual int visit();
     int attack();
     void attacked(int atk);
     void healed();
@@ -51,7 +51,7 @@ public:
     static int showused() ;
     static void print();
 protected:
-    virtual void  atk_impl() override ;
+    virtual void  atk_impl() override;
 private:
     static std::string name_;
     static int cost_;
@@ -64,7 +64,10 @@ class CoinPlant : public plant
 public:
     static void set(std::string name, int cost, int hp, int time, int coin);
     CoinPlant();
-    virtual void showskill() const override ;
+    virtual int visit() override;
+    bool isready() const;
+    int get() ;
+    virtual void showskill() const override;
     static void print();
 private:
     static std::string name_;
@@ -72,7 +75,7 @@ private:
     static int maxhp_;
     static int maxtime_;
     static int reward_;
-    int time_ = 0;
+    int time_ = -1;
 };
 
 class HealPlant : public plant
@@ -80,6 +83,7 @@ class HealPlant : public plant
 public:
     static void set(std::string name, int cost, int hp, int healpoint);
     HealPlant();
+    virtual int visit() override;
     static void print();
 private:
     static std::string name_;

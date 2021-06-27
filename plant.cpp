@@ -81,6 +81,11 @@ void plant::showskill() const
 
 }
 
+int plant::visit()
+{
+    return 0;
+}
+
 int plant::attack()
 {
     atk_impl();
@@ -160,7 +165,7 @@ void BombPlant::print()
 
 void BombPlant::atk_impl()
 {
-    this->attacked(this->showmaxhp());
+    this->attacked(this->showhp());
 }
 
 void CoinPlant::set(string name, int cost, int hp, int time, int coin)
@@ -177,6 +182,26 @@ CoinPlant::CoinPlant() : plant(name_,cost_,maxhp_,0)
     time_ = maxtime_;
 }
 
+int CoinPlant::visit()
+{
+    time_-=1;
+    return 1;
+}
+
+bool CoinPlant::isready() const
+{
+    return !time_;
+}
+
+int CoinPlant::get()
+{
+    if(time_)
+    {
+        return time_;
+    }
+    time_ = maxtime_;
+    return reward_;
+}
 void CoinPlant::showskill() const
 {
     cout << " (" << time_ << " more visits)";
@@ -199,6 +224,11 @@ void HealPlant::set(string name, int cost, int hp, int healpoint)
 HealPlant::HealPlant() : plant(name_,cost_,maxhp_,0)
 {
 
+}
+
+int HealPlant::visit()
+{
+    return 2;
 }
 
 void HealPlant::print()
