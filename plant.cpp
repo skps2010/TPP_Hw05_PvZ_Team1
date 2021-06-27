@@ -158,7 +158,7 @@ HealPlant::HealPlant() : plant(name_,cost_,maxhp_,0)
 }
 
 
-plant* create(char type)
+plant* create_p(char type)
 {
     plant* temp = nullptr;
     switch(type)
@@ -179,19 +179,39 @@ plant* create(char type)
     return temp;
 }
 
-bool alive (plant* pl)
+plant& create_r(char type)
 {
-    if(pl->showhp()<=0)
+    plant* temp = nullptr;
+    switch(type)
+    {
+    case 'S':
+        temp = new ShootPlant;
+        break;
+    case 'B':
+        temp = new BombPlant;
+        break;
+    case 'C':
+        temp = new CoinPlant;
+        break;
+    case 'H':
+        temp = new HealPlant;
+        break;
+    }
+    return *temp;
+}
+
+bool alive (const plant& pl)
+{
+    if(pl.showhp()<=0)
     {
         return false;
     }
     return true;
 }
 
-
-std::ostream & operator << (std::ostream &os, const plant *rhs)
+ostream & operator << (ostream &os, const plant &rhs)
 {
-    os << rhs->showname() << " HP: " << rhs->showhp();
+    os << rhs.showname() << " HP: " << rhs.showhp() ;
     return os;
 }
 

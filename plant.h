@@ -1,3 +1,5 @@
+#ifndef plant__
+#define plant__
 #include<iostream>
 class plant
 {
@@ -78,10 +80,13 @@ private:
     static int maxhp_;
 };
 
-plant* create(char type);
+plant* create_p(char type);
 
-bool alive (plant* pl);
+plant& create_r(char type);
 
-std::ostream & operator << (std::ostream &os, const plant *rhs);
+bool alive (const plant& pl);
+
+std::ostream & operator << (std::ostream &os, const plant &rhs);
 
 
+#endif
