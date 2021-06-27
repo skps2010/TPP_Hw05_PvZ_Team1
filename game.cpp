@@ -1,6 +1,8 @@
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 #include "game.h"
 #include "map.h"
 #include "land.h"
@@ -19,13 +21,40 @@ Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10)
         m->ZombieMove(i, rolldice(1, m->Landcnt()));
     }
     // read file
-    // std::ifstream file;
-    // file.open("plants.txt");
-    // char input = 0;
-    // while (file >> input)
-    // {
-    //     /* code */
-    // }
+    std::ifstream ifs;
+    ifs.open("plants.txt");
+    char input = 0;
+    while (ifs >> input)
+    {
+        dictionary.push_back(input);
+        std::string name;
+        ifs >> name;
+        if (input == 'B')
+        {
+            int cost = 0, hp = 0;
+            ifs >> cost >> hp;
+            m->B_Init(name, cost, hp);
+        }
+        else if (input == 'C')
+        {
+            int cost = 0, hp = 0, times = 0, coin = 0;
+            ifs >> cost >> hp >> times >> coin;
+            m->C_Init(name, cost, hp, times, coin);
+        }
+        else if (input == 'H')
+        {
+            int cost = 0, hp = 0, healpoint = 0;
+            ifs >> cost >> hp >> healpoint;
+            m->H_Init(name, cost, hp, healpoint);
+        }
+        else if (input == 'S')
+        {
+            int cost = 0, hp = 0, atk = 0;
+            ifs >> cost >> hp >> atk;
+            m->S_Init(name, cost, hp, atk);
+        }
+    }
+    ifs.close();
 }
 
 Game::~Game()

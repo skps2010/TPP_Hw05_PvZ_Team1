@@ -13,6 +13,7 @@ private:
     const int MAXLAND = 10;
     const int DEFAULTZOMBIE = 3;
     const int MAXZOMBIE = 10;
+    std::vector<char> dictionary;
     map *m = nullptr;
     void logo(void);
     void rule(void);
