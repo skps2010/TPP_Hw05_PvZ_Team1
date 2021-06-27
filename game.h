@@ -20,6 +20,7 @@ private:
     void rule(void);
     void showMap(void);
     void showPlants(void);
+    void makeDecision(void);
     const int setNumberOfLand(void);
     const int setNumberOfZombie(void);
     const int rolldice(const int minimum, const int maximum);

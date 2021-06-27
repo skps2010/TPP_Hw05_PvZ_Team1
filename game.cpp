@@ -16,7 +16,7 @@ Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10), las
     m = new map(setNumberOfLand(), setNumberOfZombie());
     rule();
     m->PlayerMove(rolldice(1, m->Landcnt()));
-    for (size_t i = 0; i < m->Zombiecnt(); i++)
+    for (size_t i = 0; i < m->Zombiecnt(); ++i)
     {
         m->ZombieMove(i, rolldice(1, m->Landcnt()));
     }
@@ -91,11 +91,39 @@ void Game::showMap(void)
 
 void Game::showPlants(void)
 {
-    for (size_t i = 0; i < dictionary.size(); i++)
+    for (size_t i = 0; i < dictionary.size(); ++i)
     {
         std::cout << "[" << i << "]";
         m->PrintPlant(dictionary[i]);
         std::cout << std::endl;
+    }
+    return;
+}
+
+void Game::makeDecision(void)
+{
+    std::cout << "Enter your choice (" << dictionary.size() << " to give up, default: " << lastDecision << ")...>";
+    int decision = 0;
+    std::cin >> decision;
+    if (decision > dictionary.size() || decision < 0)
+    {
+        std::cout << "Wrong input! Set your decision as default!" << std::endl;
+        decision = lastDecision;
+    }
+    else
+    {
+        lastDecision = decision;
+    }
+    if (decision != dictionary.size())
+    {
+        std::cout << "You have planted ";
+        m->PrintPlant(dictionary.at(decision));
+        std::cout << " at land " << m->PlayerPosition() << " !" << std::endl;
+        m->SetPlant(m->PlayerPosition(), dictionary.at(decision));
+    }
+    else
+    {
+        std::cout << "You give up!" << std::endl;
     }
     return;
 }
@@ -131,31 +159,41 @@ const int Game::rolldice(const int minimum, const int maximum)
 
 void Game::gameloop(void)
 {
-    showMap();
-    showPlants();
-    std::cout << std::endl;
-    m->PrintPlayer();
-    std::cout << "Enter your choice (" << dictionary.size() << " to give up, default: " << lastDecision << ")...>";
-    int decision = 0;
-    std::cin >> decision;
-    if (decision > dictionary.size() || decision < 0)
+    for (size_t jo = 0; jo < 5; ++jo)
     {
-        decision = lastDecision;
+        showMap();
+        showPlants();
+        std::cout << std::endl;
+        if (m->LandisEmpty(m->PlayerPosition()) && m->PlayerCoin() > 0)
+        {
+            m->PrintPlayer();
+            makeDecision();
+        }
+        // zombie move
+        for (size_t i = 0; i < m->Zombiecnt(); ++i)
+        {
+            if (!(m->ZombieisDead(i)))
+            {
+                m->ZombieMove(i, rolldice(1, 3));
+                std::cout << "Zombie [" << i << "] moves to land " << m->ZombiePosition(i) << "." << std::endl;
+                if (!(m->LandisEmpty(m->ZombiePosition(i))))
+                {
+                    if (m->PlantDP(m->ZombiePosition(i)) > 0)
+                    {
+                        std::cout << m->PlantName(m->ZombiePosition(i)) << " gives " << m->PlantDP(m->ZombiePosition(i)) << " damage to the zombie!" << std::endl;
+                        m->PAttackZ(m->ZombiePosition(i), i);
+                    }
+                    if (!(m->ZombieisDead(i)))
+                    {
+                        std::cout << "Zombie eats plant " << m->PlantName(m->ZombiePosition(i)) << " and causes damage 15." << std::endl;
+                        m->ZAttackP(m->ZombiePosition(i), i);
+                    }
+                }
+            }
+        }
+
+        std::cout << std::endl;
+        std::cout << std::endl;
     }
-    else
-    {
-        lastDecision = decision;
-    }
-    if (decision != dictionary.size())
-    {
-        std::cout << "You have planted " << dictionary.at(decision) << " at land " << m->PlayerPosition() << " !" << std::endl;
-        m->SetPlant(m->PlayerPosition(), dictionary.at(decision));
-    }
-    else
-    {
-        std::cout << "You give up!" << std::endl;
-    }
-    // print coin and decision
-    showMap();
     return;
 }

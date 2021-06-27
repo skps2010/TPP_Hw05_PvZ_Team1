@@ -43,13 +43,19 @@ public:
     void H_Init(std::string name, int cost, int hp, int healpoint) { HealPlant::set(name, cost, hp, healpoint); }
     int B_Used() { return BombPlant::showused(); } //炸彈炸過幾次
 
-    void SetPlant(int w, const char T) { land_[row_].SetPlant(T); }
-    bool LandisEmpty(int row) const { return land_[row_].isEmpty(); }
-    int PlantCost(int row) const { return land_[row_].PlantCost(); }
-    int PlantMHP(int row) const { return land_[row_].PlantMHP(); }
-    int PlantHP(int row) const { return land_[row_].PlantHP(); }
-    int PlantDP(int row) const { return land_[row_].PlantDP(); }
-    void PlantHurt(int row, int hp) { land_[row_].PlantHurt(hp); }
+    std::string SetPlant(int row, const char T)
+    {
+        land_[row].SetPlant(T);
+        return land_[row].PlantName();
+    }
+    bool LandisEmpty(int row) const { return land_[row].isEmpty(); }
+    std::string PlantName(int row) const { return land_[row].PlantName(); }
+    int PlantCost(int row) const { return land_[row].PlantCost(); }
+    int PlantMHP(int row) const { return land_[row].PlantMHP(); }
+    int PlantHP(int row) const { return land_[row].PlantHP(); }
+    int PlantDP(int row) const { return land_[row].PlantDP(); }
+    void PlantHurt(int row, int hp) { land_[row].PlantHurt(hp); }
+    char PlantType(int row) const { return land_[row].PlantName()[0]; }
 
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);
