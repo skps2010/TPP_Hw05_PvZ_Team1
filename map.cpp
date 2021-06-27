@@ -57,12 +57,31 @@ void map::PAttackZ(int row, int zid)
 {
     int tmp = land_[row].PlantDP();
     zombie_[zid].Hurt(tmp);
+    // Bomb
 }
 
 void map::ZAttackP(int row, int zid)
 {
     int tmp = zombie_[zid].DamagePoint();
     land_[row].PlantHurt(tmp);
+}
+
+int map::Plantcnt() const
+{
+    int tmp;
+    for (int i = 0; i < row_; ++i)
+    {
+        if (!land_[i].isEmpty())
+            tmp++;
+    }
+    return tmp;
+}
+
+void map::PlantHeal()
+{
+    for (int i = 0; i < row_; ++i)
+        if (!land_[i].isEmpty())
+            land_[i].PlantHeal();
 }
 
 std::ostream &operator<<(std::ostream &os, const map &out)
