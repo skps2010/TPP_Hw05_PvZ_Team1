@@ -38,6 +38,8 @@ int HealPlant::cost_ = 25;
 
 int HealPlant::maxhp_ = 50;
 
+int HealPlant::healpoint_ = 20;
+
 plant::plant(string name,int cost,int maxhp,int atk) :name_(name), cost_(cost), maxhp_(maxhp), remainhp_(maxhp), atk_(atk)
 {
 
@@ -99,6 +101,7 @@ void plant::healed()
     }
 }
 
+
 void plant::sethealpoint(int healpoint)
 {
     healpoint_ = healpoint;
@@ -122,6 +125,11 @@ ShootPlant::ShootPlant(): plant(name_,cost_,maxhp_,atk_)
 
 }
 
+void ShootPlant::print()
+{
+    cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives " << atk_ << " damage points" ;
+}
+
 
 void BombPlant::set(string name,int cost, int hp)
 {
@@ -143,6 +151,11 @@ BombPlant::~BombPlant()
 int BombPlant::showused()
 {
     return used_;
+}
+
+void BombPlant::print()
+{
+    cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives " << maxhp_ << " damage points" ;
 }
 
 void BombPlant::atk_impl()
@@ -169,11 +182,17 @@ void CoinPlant::showskill() const
     cout << " (" << time_ << " more visits)";
 }
 
+void CoinPlant::print()
+{
+    cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives $" << reward_ << " every " << maxtime_ << " rounds";
+}
+
 void HealPlant::set(string name, int cost, int hp, int healpoint)
 {
     name_ = name;
     cost_ = cost;
     maxhp_ = hp;
+    healpoint_ = healpoint;
     sethealpoint(healpoint);
 }
 
@@ -182,6 +201,10 @@ HealPlant::HealPlant() : plant(name_,cost_,maxhp_,0)
 
 }
 
+void HealPlant::print()
+{
+    cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives all your plants " << healpoint_ << " HP back";
+}
 
 plant* create_p(char type)
 {
@@ -241,4 +264,21 @@ ostream & operator << (ostream &os, const plant &rhs)
     return os;
 }
 
-
+void show(char type)
+{
+    switch(type)
+    {
+    case 'S':
+        ShootPlant::print();
+        break;
+    case 'B':
+        BombPlant::print();
+        break;
+    case 'C':
+        CoinPlant::print();
+        break;
+    case 'H':
+        HealPlant::print();
+        break;
+    }
+}
