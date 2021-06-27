@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "game.h"
 #include "map.h"
 #include "land.h"
@@ -6,11 +8,24 @@
 
 Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10)
 {
+    srand(time(NULL));
+    // init the map
     logo();
-    int NumOfLand = setNumberOfLand();
-    int NumOfZombie = setNumberOfZombie();
-    m = new map(NumOfLand, NumOfZombie);
+    m = new map(setNumberOfLand(), setNumberOfZombie());
     rule();
+    m->PlayerMove(rolldice(1, m->Landcnt()));
+    for (size_t i = 0; i < m->Zombiecnt(); i++)
+    {
+        m->ZombieMove(i, rolldice(1, m->Landcnt()));
+    }
+    // read file
+    // std::ifstream file;
+    // file.open("plants.txt");
+    // char input = 0;
+    // while (file >> input)
+    // {
+    //     /* code */
+    // }
 }
 
 Game::~Game()
@@ -36,6 +51,12 @@ void Game::rule(void)
     return;
 }
 
+void Game::showMap(void)
+{
+    std::cout << *m;
+    return;
+}
+
 const int Game::setNumberOfLand(void)
 {
     int NumOfLand = 0;
@@ -58,4 +79,17 @@ const int Game::setNumberOfZombie(void)
         NumOfZombie = DEFAULTZOMBIE;
     }
     return NumOfZombie;
+}
+
+const int Game::rolldice(const int minimum, const int maximum)
+{
+    return (rand() % (maximum - minimum + 1)) + minimum;
+}
+
+void Game::gameloop(void)
+{
+    showMap();
+    // show plant
+    // print coin and decision
+    return;
 }
