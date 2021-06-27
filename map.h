@@ -50,6 +50,7 @@ public:
     }
     bool LandisEmpty(int row) const { return land_[row].isEmpty(); }
     std::string PlantName(int row) const { return land_[row].PlantName(); }
+    char PlantType(int row) const { return land_[row].PlantName()[0]; }
     int PlantCost(int row) const { return land_[row].PlantCost(); }
     int PlantMHP(int row) const { return land_[row].PlantMHP(); }
     int PlantHP(int row) const { return land_[row].PlantHP(); }
