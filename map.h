@@ -18,6 +18,7 @@ public:
     void PrintPlayer() const;
     void PrintRow(const int i) const;
     void PrintZombie(const int id) const;
+    void PrintPlant(const char T) const { show(T); }
 
     int Landcnt() const { return row_; }
     int Zombiecnt() const { return zombiecnt_; }
@@ -30,6 +31,11 @@ public:
     int PlayerPosition();
     int PlayerCoin() const { return player_.Coin(); }
     int Cost(const int m);
+
+    void S_Print() const {};
+    void B_Print() const {};
+    void C_Print() const {};
+    void H_Print() const {};
 
     void S_Init(std::string name, int cost, int hp, int atk) { ShootPlant::set(name, cost, hp, atk); }
     void B_Init(std::string name, int cost, int hp) { BombPlant::set(name, cost, hp); };

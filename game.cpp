@@ -8,7 +8,7 @@
 #include "land.h"
 #include "zombie.h"
 
-Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10)
+Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10), lastDecision(0)
 {
     srand(time(NULL));
     // init the map
@@ -29,6 +29,8 @@ Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10)
         dictionary.push_back(input);
         std::string name;
         ifs >> name;
+        char dollarsign = 0;
+        ifs >> dollarsign;
         if (input == 'B')
         {
             int cost = 0, hp = 0;
@@ -55,6 +57,7 @@ Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10)
         }
     }
     ifs.close();
+    lastDecision = dictionary.size();
 }
 
 Game::~Game()
@@ -83,6 +86,17 @@ void Game::rule(void)
 void Game::showMap(void)
 {
     std::cout << *m;
+    return;
+}
+
+void Game::showPlants(void)
+{
+    for (size_t i = 0; i < dictionary.size(); i++)
+    {
+        std::cout << "[" << i << "]";
+        m->PrintPlant(dictionary[i]);
+        std::cout << std::endl;
+    }
     return;
 }
 
@@ -118,7 +132,30 @@ const int Game::rolldice(const int minimum, const int maximum)
 void Game::gameloop(void)
 {
     showMap();
-    // show plant
+    showPlants();
+    std::cout << std::endl;
+    m->PrintPlayer();
+    std::cout << "Enter your choice (" << dictionary.size() << " to give up, default: " << lastDecision << ")...>";
+    int decision = 0;
+    std::cin >> decision;
+    if (decision > dictionary.size() || decision < 0)
+    {
+        decision = lastDecision;
+    }
+    else
+    {
+        lastDecision = decision;
+    }
+    if (decision != dictionary.size())
+    {
+        std::cout << "You have planted " << dictionary.at(decision) << " at land " << m->PlayerPosition() << " !" << std::endl;
+        m->SetPlant(m->PlayerPosition(), dictionary.at(decision));
+    }
+    else
+    {
+        std::cout << "You give up!" << std::endl;
+    }
     // print coin and decision
+    showMap();
     return;
 }

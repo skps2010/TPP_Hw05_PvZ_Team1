@@ -13,11 +13,13 @@ private:
     const int MAXLAND = 10;
     const int DEFAULTZOMBIE = 3;
     const int MAXZOMBIE = 10;
+    int lastDecision = 0;
     std::vector<char> dictionary;
     map *m = nullptr;
     void logo(void);
     void rule(void);
     void showMap(void);
+    void showPlants(void);
     const int setNumberOfLand(void);
     const int setNumberOfZombie(void);
     const int rolldice(const int minimum, const int maximum);
