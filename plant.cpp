@@ -73,7 +73,17 @@ int plant::showatk() const
     return atk_;
 }
 
-void plant::visit()  {cout << "a" << endl;}
+
+void plant::showskill() const
+{
+
+}
+
+int plant::attack()
+{
+    atk_impl();
+    return plant::showatk();
+}
 
 void plant::attacked(int atk)
 {
@@ -92,6 +102,11 @@ void plant::healed()
 void plant::sethealpoint(int healpoint)
 {
     healpoint_ = healpoint;
+}
+
+void  plant::atk_impl()
+{
+
 }
 
 void ShootPlant::set(string name, int cost, int hp, int atk)
@@ -130,6 +145,11 @@ int BombPlant::showused()
     return used_;
 }
 
+void BombPlant::atk_impl()
+{
+    this->attacked(this->showmaxhp());
+}
+
 void CoinPlant::set(string name, int cost, int hp, int time, int coin)
 {
     name_ = name;
@@ -141,7 +161,12 @@ void CoinPlant::set(string name, int cost, int hp, int time, int coin)
 
 CoinPlant::CoinPlant() : plant(name_,cost_,maxhp_,0)
 {
+    time_ = maxtime_;
+}
 
+void CoinPlant::showskill() const
+{
+    cout << " (" << time_ << " more visits)";
 }
 
 void HealPlant::set(string name, int cost, int hp, int healpoint)
@@ -212,6 +237,7 @@ bool alive (const plant& pl)
 ostream & operator << (ostream &os, const plant &rhs)
 {
     os << rhs.showname() << " HP: " << rhs.showhp() ;
+    rhs.showskill();
     return os;
 }
 
