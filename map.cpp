@@ -58,6 +58,7 @@ void map::PAttackZ(int row, int zid)
     int tmp = land_[row].PlantDP();
     if (!zombie_[zid].isDead())
         zombie_[zid].Hurt(tmp);
+    land_[row].CheckAlive();
 }
 
 void map::ZAttackP(int row, int zid)

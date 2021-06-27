@@ -6,6 +6,11 @@ using namespace std;
 void land::PlantHurt(const int hp)
 {
     p->attacked(hp);
+    CheckAlive();
+}
+
+void land::CheckAlive()
+{
     if (!alive(*p))
     {
         delete p;

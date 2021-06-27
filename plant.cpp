@@ -1,6 +1,6 @@
-#include <string>
-#include <iostream>
-#include "plant.h"
+#include<string>
+#include<iostream>
+#include"plant.h"
 
 using namespace std;
 
@@ -40,12 +40,14 @@ int HealPlant::maxhp_ = 50;
 
 int HealPlant::healpoint_ = 20;
 
-plant::plant(string name, int cost, int maxhp, int atk) : name_(name), cost_(cost), maxhp_(maxhp), remainhp_(maxhp), atk_(atk)
+plant::plant(string name,int cost,int maxhp,int atk) :name_(name), cost_(cost), maxhp_(maxhp), remainhp_(maxhp), atk_(atk)
 {
+
 }
 
 plant::~plant()
 {
+
 }
 
 string plant::showname() const
@@ -73,8 +75,15 @@ int plant::showatk() const
     return atk_;
 }
 
+
 void plant::showskill() const
 {
+
+}
+
+int plant::visit()
+{
+    return 0;
 }
 
 int plant::attack()
@@ -91,19 +100,21 @@ void plant::attacked(int atk)
 void plant::healed()
 {
     remainhp_ += healpoint_;
-    if (remainhp_ > maxhp_)
+    if(remainhp_>maxhp_)
     {
         remainhp_ = maxhp_;
     }
 }
+
 
 void plant::sethealpoint(int healpoint)
 {
     healpoint_ = healpoint;
 }
 
-void plant::atk_impl()
+void  plant::atk_impl()
 {
+
 }
 
 void ShootPlant::set(string name, int cost, int hp, int atk)
@@ -114,29 +125,32 @@ void ShootPlant::set(string name, int cost, int hp, int atk)
     atk_ = atk;
 }
 
-ShootPlant::ShootPlant() : plant(name_, cost_, maxhp_, atk_)
+ShootPlant::ShootPlant(): plant(name_,cost_,maxhp_,atk_)
 {
+
 }
 
 void ShootPlant::print()
 {
-    cout << name_ << " $" << cost_ << " HP: " << maxhp_ << " - gives " << atk_ << " damage points";
+    cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives " << atk_ << " damage points" ;
 }
 
-void BombPlant::set(string name, int cost, int hp)
+
+void BombPlant::set(string name,int cost, int hp)
 {
     name_ = name;
     cost_ = cost;
     maxhp_ = hp;
 }
 
-BombPlant::BombPlant() : plant(name_, cost_, maxhp_, maxhp_)
+BombPlant::BombPlant(): plant(name_,cost_,maxhp_,maxhp_)
 {
+
 }
 
 BombPlant::~BombPlant()
 {
-    used_ += 1;
+    used_+=1;
 }
 
 int BombPlant::showused()
@@ -146,12 +160,12 @@ int BombPlant::showused()
 
 void BombPlant::print()
 {
-    cout << name_ << " $" << cost_ << " HP: " << maxhp_ << " - gives " << maxhp_ << " damage points";
+    cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives " << maxhp_ << " damage points" ;
 }
 
 void BombPlant::atk_impl()
 {
-    this->attacked(this->showmaxhp());
+    this->attacked(this->showhp());
 }
 
 void CoinPlant::set(string name, int cost, int hp, int time, int coin)
@@ -163,11 +177,31 @@ void CoinPlant::set(string name, int cost, int hp, int time, int coin)
     reward_ = coin;
 }
 
-CoinPlant::CoinPlant() : plant(name_, cost_, maxhp_, 0)
+CoinPlant::CoinPlant() : plant(name_,cost_,maxhp_,0)
 {
     time_ = maxtime_;
 }
 
+int CoinPlant::visit()
+{
+    time_-=1;
+    return 1;
+}
+
+bool CoinPlant::isready() const
+{
+    return !time_;
+}
+
+int CoinPlant::get()
+{
+    if(time_)
+    {
+        return time_;
+    }
+    time_ = maxtime_;
+    return reward_;
+}
 void CoinPlant::showskill() const
 {
     cout << " (" << time_ << " more visits)";
@@ -175,7 +209,7 @@ void CoinPlant::showskill() const
 
 void CoinPlant::print()
 {
-    cout << name_ << " $" << cost_ << " HP: " << maxhp_ << " - gives $" << reward_ << " every " << maxtime_ << " rounds";
+    cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives $" << reward_ << " every " << maxtime_ << " rounds";
 }
 
 void HealPlant::set(string name, int cost, int hp, int healpoint)
@@ -187,19 +221,25 @@ void HealPlant::set(string name, int cost, int hp, int healpoint)
     sethealpoint(healpoint);
 }
 
-HealPlant::HealPlant() : plant(name_, cost_, maxhp_, 0)
+HealPlant::HealPlant() : plant(name_,cost_,maxhp_,0)
 {
+
+}
+
+int HealPlant::visit()
+{
+    return 2;
 }
 
 void HealPlant::print()
 {
-    cout << name_ << " $" << cost_ << " HP: " << maxhp_ << " - gives all your plants " << healpoint_ << " HP back";
+    cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives all your plants " << healpoint_ << " HP back";
 }
 
-plant *create_p(char type)
+plant* create_p(char type)
 {
-    plant *temp = nullptr;
-    switch (type)
+    plant* temp = nullptr;
+    switch(type)
     {
     case 'S':
         temp = new ShootPlant;
@@ -217,10 +257,10 @@ plant *create_p(char type)
     return temp;
 }
 
-plant &create_r(char type)
+plant& create_r(char type)
 {
-    plant *temp = nullptr;
-    switch (type)
+    plant* temp = nullptr;
+    switch(type)
     {
     case 'S':
         temp = new ShootPlant;
@@ -238,25 +278,25 @@ plant &create_r(char type)
     return *temp;
 }
 
-bool alive(const plant &pl)
+bool alive (const plant& pl)
 {
-    if (pl.showhp() <= 0)
+    if(pl.showhp()<=0)
     {
         return false;
     }
     return true;
 }
 
-ostream &operator<<(ostream &os, const plant &rhs)
+ostream & operator << (ostream &os, const plant &rhs)
 {
-    os << rhs.showname() << " HP: " << rhs.showhp();
+    os << rhs.showname() << " HP: " << rhs.showhp() ;
     rhs.showskill();
     return os;
 }
 
 void show(char type)
 {
-    switch (type)
+    switch(type)
     {
     case 'S':
         ShootPlant::print();

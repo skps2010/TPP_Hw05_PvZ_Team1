@@ -116,10 +116,8 @@ void Game::makeDecision(void)
     }
     if (decision != dictionary.size())
     {
-        std::cout << "You have planted ";
-        m->PrintPlant(dictionary.at(decision));
-        std::cout << " at land " << m->PlayerPosition() << " !" << std::endl;
         m->SetPlant(m->PlayerPosition(), dictionary.at(decision));
+        std::cout << "You have planted " << m->PlantName(m->PlayerPosition()) << " at land " << m->PlayerPosition() << " !" << std::endl;
     }
     else
     {
@@ -178,6 +176,7 @@ void Game::gameloop(void)
                 std::cout << "Zombie [" << i << "] moves to land " << m->ZombiePosition(i) << "." << std::endl;
                 if (!(m->LandisEmpty(m->ZombiePosition(i))))
                 {
+                    std::string NowPlantName = m->PlantName(m->ZombiePosition(i));
                     if (m->PlantDP(m->ZombiePosition(i)) > 0)
                     {
                         std::cout << m->PlantName(m->ZombiePosition(i)) << " gives " << m->PlantDP(m->ZombiePosition(i)) << " damage to the zombie!" << std::endl;
@@ -187,6 +186,10 @@ void Game::gameloop(void)
                     {
                         std::cout << "Zombie eats plant " << m->PlantName(m->ZombiePosition(i)) << " and causes damage 15." << std::endl;
                         m->ZAttackP(m->ZombiePosition(i), i);
+                    }
+                    if (m->LandisEmpty(m->ZombiePosition(i)))
+                    {
+                        std::cout << "Plant " << NowPlantName << " is dead!" << std::endl;
                     }
                 }
             }

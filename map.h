@@ -50,12 +50,12 @@ public:
     }
     bool LandisEmpty(int row) const { return land_[row].isEmpty(); }
     std::string PlantName(int row) const { return land_[row].PlantName(); }
+    char PlantType(int row) const { return land_[row].PlantName()[0]; }
     int PlantCost(int row) const { return land_[row].PlantCost(); }
     int PlantMHP(int row) const { return land_[row].PlantMHP(); }
     int PlantHP(int row) const { return land_[row].PlantHP(); }
     int PlantDP(int row) const { return land_[row].PlantDP(); }
     void PlantHurt(int row, int hp) { land_[row].PlantHurt(hp); }
-    char PlantType(int row) const { return land_[row].PlantName()[0]; }
 
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);

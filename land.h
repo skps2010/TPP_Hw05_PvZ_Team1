@@ -20,6 +20,7 @@ public:
     int PlantDP() { return p->attack(); }
     void PlantHeal() { p->healed(); }
     void PlantHurt(int hp);
+    void CheckAlive();
     std::string PlantName() { return p->showname(); }
 
 private:
