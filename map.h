@@ -18,6 +18,7 @@ public:
     void PrintPlayer() const;
     void PrintRow(const int i) const;
     void PrintZombie(const int id) const;
+    void PrintPlant(const char T) const { show(T); }
 
     int Landcnt() const { return row_; }
     int Zombiecnt() const { return zombiecnt_; }
