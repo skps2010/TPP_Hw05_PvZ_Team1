@@ -31,6 +31,11 @@ public:
     int PlayerCoin() const { return player_.Coin(); }
     int Cost(const int m);
 
+    void S_Print() const {};
+    void B_Print() const {};
+    void C_Print() const {};
+    void H_Print() const {};
+
     void S_Init(std::string name, int cost, int hp, int atk) { ShootPlant::set(name, cost, hp, atk); }
     void B_Init(std::string name, int cost, int hp) { BombPlant::set(name, cost, hp); };
     void C_Init(std::string name, int cost, int hp, int time, int coin) { CoinPlant::set(name, cost, hp, time, coin); };
