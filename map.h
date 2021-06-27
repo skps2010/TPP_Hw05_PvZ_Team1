@@ -17,19 +17,23 @@ public:
     }
     int Landcnt() const { return row_; }
     int Zombiecnt() const { return zombiecnt_; }
-    bool ZombieisDead(const int id) const { return zombie_[id].isDead(); }
     int Plantcnt() const { return 0; } // not done yet
+
     void PrintPlayer() const;
     void PrintRow(const int i) const;
     void PrintZombie(const int id) const;
+
     int ZombieMove(const int id, const int step);
     int ZombiePosition(const int id);
+    bool ZombieisDead(const int id) const { return zombie_[id].isDead(); }
+
     int PlayerMove(const int step);
     int PlayerPosition();
+    int PlayerCoin() const { return player_.Coin(); }
+    void PlayerCost(const int m) { player_.Cost(m); }
+
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);
-    int PlayerCoin() const { return player_.Coin(); }
-    int Cost(const int m);
 
 private:
     int row_ = 8;
