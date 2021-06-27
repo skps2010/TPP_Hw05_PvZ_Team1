@@ -17,7 +17,7 @@ public:
     int PlantCost() const { return p->showcost(); }
     int PlantMHP() const { return p->showmaxhp(); }
     int PlantHP() const { return p->showhp(); }
-    int PlantDP() const { return p->showatk(); }
+    int PlantDP() { return p->attack(); }
     void PlantHeal() { p->healed(); }
     void PlantHurt(int hp);
 

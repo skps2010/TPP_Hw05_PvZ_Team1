@@ -56,14 +56,15 @@ int map::PlayerPosition()
 void map::PAttackZ(int row, int zid)
 {
     int tmp = land_[row].PlantDP();
-    zombie_[zid].Hurt(tmp);
-    // Bomb
+    if (!zombie_[zid].isDead())
+        zombie_[zid].Hurt(tmp);
 }
 
 void map::ZAttackP(int row, int zid)
 {
     int tmp = zombie_[zid].DamagePoint();
-    land_[row].PlantHurt(tmp);
+    if (!land_[row].isEmpty())
+        land_[row].PlantHurt(tmp);
 }
 
 int map::Plantcnt() const
