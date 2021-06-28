@@ -46,6 +46,7 @@ public:
     std::string SetPlant(int row, const char T)
     {
         land_[row].SetPlant(T);
+        Cost(land_[row].PlantCost());
         return land_[row].PlantName();
     }
     bool LandisEmpty(int row) const { return land_[row].isEmpty(); }
