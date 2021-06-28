@@ -86,6 +86,7 @@ public:
     static void set(std::string name, int cost, int hp, int healpoint);
     HealPlant();
     virtual int visit() override;
+    virtual int get() override;
     static void print();
 private:
     static std::string name_;

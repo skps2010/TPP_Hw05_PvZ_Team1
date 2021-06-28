@@ -252,6 +252,11 @@ int HealPlant::visit()
     return 2;
 }
 
+int HealPlant::get()
+{
+    return healpoint_;
+}
+
 void HealPlant::print()
 {
     cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives all your plants " << healpoint_ << " HP back";
