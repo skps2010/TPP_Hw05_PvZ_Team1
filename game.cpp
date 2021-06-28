@@ -161,13 +161,13 @@ void Game::gameloop(void)
     while (1)
     {
         showMap();
-        showPlants();
-        std::cout << std::endl;
-        m->PrintPlayer();
         if (m->LandisEmpty(m->PlayerPosition()))
         {
             if (m->PlayerCoin() > 0)
             {
+                showPlants();
+                std::cout << std::endl;
+                m->PrintPlayer();
                 makeDecision();
             }
             else
