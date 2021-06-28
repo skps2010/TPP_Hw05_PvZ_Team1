@@ -62,8 +62,10 @@ int map::PlayerMove(const int step)
                 land_[i].PlantHeal();
             }
         }
+        return tmp;
     }
-    return player_.Position();
+    else
+        return -1;
 }
 
 int map::PlayerPosition()
