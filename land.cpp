@@ -7,6 +7,7 @@ void land::PlantHurt(const int hp)
 {
     p->attacked(hp);
     CheckAlive();
+    cout << "land OK\n";
 }
 
 void land::CheckAlive()

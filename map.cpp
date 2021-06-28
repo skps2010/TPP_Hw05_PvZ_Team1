@@ -83,7 +83,10 @@ void map::ZAttackP(int row, int zid)
 {
     int tmp = zombie_[zid].DamagePoint();
     if (!land_[row].isEmpty())
+    {
         land_[row].PlantHurt(tmp);
+        cout << "map OK\n";
+    }
 }
 
 int map::Plantcnt() const
