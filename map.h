@@ -4,6 +4,7 @@
 #include "land.h"
 #include "zombie.h"
 #include "player.h"
+#include "plant.h"
 
 class map
 {
@@ -67,6 +68,7 @@ public:
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);
     int Plantcnt() const;
+    int PlantShowCost(char T) { return showcost(T); }
 
 private:
     int row_ = 8;
