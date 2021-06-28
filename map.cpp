@@ -93,11 +93,11 @@ void map::ZAttackP(int row, int zid)
 
 int map::Plantcnt() const
 {
-    int tmp;
+    int tmp = 0;
     for (int i = 0; i < row_; ++i)
     {
         if (!land_[i].isEmpty())
-            tmp++;
+            ++tmp;
     }
     return tmp;
 }
