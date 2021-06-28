@@ -45,7 +45,7 @@ int map::ZombiePosition(const int id)
 int map::PlayerMove(const int step)
 {
     player_.Step(step, row_);
-    if (land_[player_.Position()].isEmpty())
+    if (!land_[player_.Position()].isEmpty())
     {
         int tmp = land_[player_.Position()].PlantVisit();
         if (tmp == 1) // Coin
