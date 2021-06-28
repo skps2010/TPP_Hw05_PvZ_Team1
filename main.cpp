@@ -10,8 +10,7 @@ using namespace std;
 int main()
 {
     Game agent;
-    system("pause");
-    system("cls");
+    PAUSE_AND_CLEAR
     agent.gameloop();
     return 0;
     // map m(8, 3); //land, zombie

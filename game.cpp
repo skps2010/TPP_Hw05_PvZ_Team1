@@ -194,8 +194,7 @@ void Game::gameloop(void)
         {
             std::cout << "All your plants have recovered " << m->PlantStatus(m->PlayerPosition()) << " HP!" << std::endl;
         }
-        system("pause");
-        system("cls");
+        PAUSE_AND_CLEAR
 
         // zombie move
         int deadzombie = 0;
@@ -243,8 +242,7 @@ void Game::gameloop(void)
                         break;
                     }
                 }
-                system("pause");
-                system("cls");
+                PAUSE_AND_CLEAR
             }
             else
             {

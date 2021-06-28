@@ -6,6 +6,12 @@
 #include "land.h"
 #include "zombie.h"
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+    #define PAUSE_AND_CLEAR system("pause");system("cls");
+#else
+    #define PAUSE_AND_CLEAR system("read -n 1");system("clear");
+#endif
+
 class Game
 {
 private:
