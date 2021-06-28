@@ -85,7 +85,6 @@ void map::ZAttackP(int row, int zid)
     if (!land_[row].isEmpty())
     {
         land_[row].PlantHurt(tmp);
-        cout << "map OK\n";
     }
 }
 
