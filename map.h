@@ -58,9 +58,13 @@ public:
     int PlantDP(int row) const { return land_[row].PlantDP(); }
     void PlantHurt(int row, int hp) { land_[row].PlantHurt(hp); }
     bool PlantisReady(int row) const { return isready_; }
-    void PlantisReadyUpdate(int row) { isready_ = land_[row].PlantisReady(); }
+    void PlantUpdate(int row)
+    {
+        isready_ = land_[row].PlantisReady();
+        status_ = land_[row].PlantGet();
+    }
     int PlantVisit(int row) const { return land_[row].PlantVisit(); }
-    int PlantStatus(int row) { return land_[row].PlantGet(); }
+    int PlantStatus(int row) { return status_; }
     // HealPlant: Heal point
     // CoinPlant: 剩餘回合(NotReady) or 拿到的錢(isReady)
     bool PlantisOffensive(int row) const { return land_[row].isOffensive(); }
@@ -74,6 +78,7 @@ private:
     int row_ = 8;
     int zombiecnt_ = 3;
     bool isready_ = false;
+    int status_ = -1;
     player player_;
     zombie *zombie_;
     land *land_;
