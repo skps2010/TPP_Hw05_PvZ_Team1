@@ -48,6 +48,7 @@ int map::PlayerMove(const int step)
     if (!land_[player_.Position()].isEmpty())
     {
         int tmp = land_[player_.Position()].PlantVisit();
+        PlantisReadyUpdate(player_.Position());
         if (tmp == 1) // Coin
         {
             if (land_[player_.Position()].PlantisReady())
