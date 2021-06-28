@@ -161,13 +161,13 @@ void Game::gameloop(void)
     while (1)
     {
         showMap();
-        showPlants();
-        std::cout << std::endl;
-        m->PrintPlayer();
         if (m->LandisEmpty(m->PlayerPosition()))
         {
             if (m->PlayerCoin() > 0)
             {
+                showPlants();
+                std::cout << std::endl;
+                m->PrintPlayer();
                 makeDecision();
             }
             else
@@ -201,9 +201,9 @@ void Game::gameloop(void)
         int deadzombie = 0;
         for (size_t i = 0; i < m->Zombiecnt(); ++i)
         {
-            showMap();
             if (!(m->ZombieisDead(i)))
             {
+                showMap();
                 m->ZombieMove(i, rolldice(1, 3));
                 std::cout << "Zombie [" << i << "] moves to land " << m->ZombiePosition(i) << "." << std::endl;
                 if (!(m->LandisEmpty(m->ZombiePosition(i))))
