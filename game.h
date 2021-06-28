@@ -15,6 +15,7 @@ private:
     const int MAXZOMBIE = 10;
     int lastDecision = 0;
     int gamestatus = 0;
+    int plantUnderthePlayer = -1;
     std::vector<char> dictionary;
     map *m = nullptr;
     void logo(void);

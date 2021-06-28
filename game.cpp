@@ -8,11 +8,11 @@
 #include "land.h"
 #include "zombie.h"
 
-Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10), lastDecision(0), gamestatus(0)
+Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10), lastDecision(0), gamestatus(0), plantUnderthePlayer(-1)
 {
     srand(time(NULL));
     // init the map
-    // logo();
+    logo();
     m = new map(setNumberOfLand(), setNumberOfZombie());
     rule();
     m->PlayerMove(rolldice(1, m->Landcnt()));
@@ -68,9 +68,9 @@ Game::~Game()
 
 void Game::logo(void)
 {
-    std::cout << "┌─────────────────────────────────────────┐" << std::endl;
-    std::cout << "│ TPP_2021 Hw05 Group1 Plants vs. Zombies │" << std::endl;
-    std::cout << "└─────────────────────────────────────────┘" << std::endl;
+    std::cout << "=-----------------------------------------=" << std::endl;
+    std::cout << "| TPP_2021 Hw05 Group1 Plants vs. Zombies |" << std::endl;
+    std::cout << "=-----------------------------------------=" << std::endl;
     return;
 }
 
@@ -163,11 +163,11 @@ void Game::gameloop(void)
         showMap();
         showPlants();
         std::cout << std::endl;
+        m->PrintPlayer();
         if (m->LandisEmpty(m->PlayerPosition()))
         {
             if (m->PlayerCoin() > 0)
             {
-                m->PrintPlayer();
                 makeDecision();
             }
             else
@@ -175,16 +175,24 @@ void Game::gameloop(void)
                 std::cout << "You do not have enough money to plant anything!" << std::endl;
             }
         }
-        else
+        else if (plantUnderthePlayer == 0)
+        {
+            std::cout << m->PlantName(m->PlayerPosition()) << " is guarding your land." << std::endl;
+        }
+        else if (plantUnderthePlayer == 1)
         {
             if (m->PlantisReady(m->PlayerPosition()))
             {
                 std::cout << "You have earned $" << m->PlantStatus(m->PlayerPosition()) << "! Now you have $" << m->PlayerCoin() << "." << std::endl;
             }
-            // else
-            // {
-            //     m->
-            // }
+            else
+            {
+                std::cout << "You still need " << m->PlantStatus(m->PlayerPosition()) << " visit to earn money." << std::endl;
+            }
+        }
+        else if (plantUnderthePlayer == 2)
+        {
+            std::cout << "All your plants have recovered " << m->PlantStatus(m->PlayerPosition()) << " HP!" << std::endl;
         }
         system("pause");
         system("cls");
@@ -193,6 +201,7 @@ void Game::gameloop(void)
         int deadzombie = 0;
         for (size_t i = 0; i < m->Zombiecnt(); ++i)
         {
+            showMap();
             if (!(m->ZombieisDead(i)))
             {
                 m->ZombieMove(i, rolldice(1, 3));
@@ -200,7 +209,7 @@ void Game::gameloop(void)
                 if (!(m->LandisEmpty(m->ZombiePosition(i))))
                 {
                     std::string NowPlantName = m->PlantName(m->ZombiePosition(i));
-                    if (m->PlantDP(m->ZombiePosition(i)) > 0)
+                    if (m->PlantisOffensive(m->ZombiePosition(i)))
                     {
                         std::cout << m->PlantName(m->ZombiePosition(i)) << " gives " << m->PlantDP(m->ZombiePosition(i)) << " damage to the zombie!" << std::endl;
                         m->PAttackZ(m->ZombiePosition(i), i);
@@ -259,7 +268,7 @@ void Game::gameloop(void)
             std::cout << "Congratulations! You have killed all zombies!" << std::endl;
             break;
         }
-        m->PlayerMove(rolldice(1, 6));
+        plantUnderthePlayer = m->PlayerMove(rolldice(1, 6));
     }
     return;
 }

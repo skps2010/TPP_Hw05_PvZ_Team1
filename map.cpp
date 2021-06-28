@@ -51,9 +51,9 @@ int map::PlayerMove(const int step)
         PlantUpdate(player_.Position());
         if (tmp == 1) // Coin
         {
-            if (land_[player_.Position()].PlantisReady())
+            if (isready_)
             {
-                Cost(-land_[player_.Position()].PlantGet());
+                Cost(-status_);
             }
         }
         if (tmp == 2) // Heal
