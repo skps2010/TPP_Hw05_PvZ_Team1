@@ -22,6 +22,9 @@ public:
     void PlantHurt(int hp);
     void CheckAlive();
     std::string PlantName() { return p->showname(); }
+    int PlantVisit() { p->visit(); } //1: Coin 2: Heal
+    bool PlantisReady() const { p->isready(); }
+    int PlantGet() { p->get(); } //1:
 
 private:
     plant *p = nullptr;
