@@ -22,10 +22,10 @@ public:
     void PlantHurt(int hp);
     void CheckAlive();
     std::string PlantName() { return p->showname(); }
-    int PlantVisit() { p->visit(); } //1: Coin 2: Heal
-    bool PlantisReady() const { p->isready(); }
-    int PlantGet() { p->get(); } //1:
-    bool isOffensive() const { p->isoffensive(); }
+    int PlantVisit() { return p->visit(); } //1: Coin 2: Heal
+    bool PlantisReady() const { return p->isready(); }
+    int PlantGet() { return p->get(); } //1:
+    bool isOffensive() const { return p->isoffensive(); }
 
 private:
     plant *p = nullptr;

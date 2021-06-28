@@ -55,7 +55,7 @@ int map::PlayerMove(const int step)
                 Cost(-land_[player_.Position()].PlantGet());
             }
         }
-        if (tmp = 2) // Heal
+        if (tmp == 2) // Heal
         {
             for (int i = 0; i < row_; i++)
             {
