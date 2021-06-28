@@ -30,7 +30,7 @@ public:
     int PlayerMove(const int step);
     int PlayerPosition();
     int PlayerCoin() const { return player_.Coin(); }
-    int Cost(const int m) { player_.Cost(m); }
+    void Cost(const int m) { player_.Cost(m); }
 
     void S_Print() const {};
     void B_Print() const {};
@@ -56,10 +56,13 @@ public:
     int PlantHP(int row) const { return land_[row].PlantHP(); }
     int PlantDP(int row) const { return land_[row].PlantDP(); }
     void PlantHurt(int row, int hp) { land_[row].PlantHurt(hp); }
-    int PlantStatus(int row) { return land_[row].PlantGet(); }
     bool PlantisReady(int row) { return land_[row].PlantisReady(); }
+    bool PlantisAttack(int row) {}
+    int PlantVisit(int row) { return land_[row].PlantVisit(); }
+    int PlantStatus(int row) { return land_[row].PlantGet(); }
     // HealPlant: Heal point
     // CoinPlant: 剩餘回合(NotReady) or 拿到的錢(isReady)
+    bool PlantisOffensive(int row) const { land_[row].isOffensive(); }
 
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);

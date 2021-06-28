@@ -45,19 +45,22 @@ int map::ZombiePosition(const int id)
 int map::PlayerMove(const int step)
 {
     player_.Step(step, row_);
-    int tmp = land_[player_.Position()].PlantVisit();
-    if (tmp == 1) // Coin
+    if (!land_[player_.Position()].isEmpty())
     {
-        if (land_[player_.Position()].PlantisReady())
+        int tmp = land_[player_.Position()].PlantVisit();
+        if (tmp == 1) // Coin
         {
-            Cost(-land_[player_.Position()].PlantGet());
+            if (land_[player_.Position()].PlantisReady())
+            {
+                Cost(-land_[player_.Position()].PlantGet());
+            }
         }
-    }
-    if (tmp = 2) // Heal
-    {
-        for (int i = 0; i < row_; i++)
+        if (tmp = 2) // Heal
         {
-            land_[i].PlantHeal();
+            for (int i = 0; i < row_; i++)
+            {
+                land_[i].PlantHeal();
+            }
         }
     }
     return player_.Position();

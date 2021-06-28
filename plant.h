@@ -15,6 +15,7 @@ public:
     virtual int visit();
     virtual bool isready() const;
     virtual int get();
+    virtual bool isoffensive()  const = 0;
     int attack();
     void attacked(int atk);
     void healed();
@@ -36,6 +37,7 @@ class ShootPlant : public plant
 public:
     static void set(std::string name, int cost, int hp, int atk);
     ShootPlant();
+    virtual bool isoffensive() const override;
     static void print();
 private:
     static std::string name_;
@@ -50,6 +52,7 @@ public:
     static void set(std::string name,int cost, int hp);
     BombPlant();
     ~BombPlant() ;
+    virtual bool isoffensive() const override;
     static int showused() ;
     static void print();
 protected:
@@ -70,6 +73,7 @@ public:
     virtual bool isready() const override;
     virtual int get() override;
     virtual void showskill() const override;
+    virtual bool isoffensive() const override;
     static void print();
 private:
     static std::string name_;
@@ -87,6 +91,7 @@ public:
     HealPlant();
     virtual int visit() override;
     virtual int get() override;
+    virtual bool isoffensive() const override;
     static void print();
 private:
     static std::string name_;

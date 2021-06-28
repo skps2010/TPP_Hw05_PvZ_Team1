@@ -146,6 +146,11 @@ ShootPlant::ShootPlant(): plant(name_,cost_,maxhp_,atk_)
 
 }
 
+bool ShootPlant::isoffensive() const
+{
+    return true;
+}
+
 void ShootPlant::print()
 {
     cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives " << atk_ << " damage points" ;
@@ -168,6 +173,11 @@ BombPlant::BombPlant(): plant(name_,cost_,maxhp_,maxhp_)
 BombPlant::~BombPlant()
 {
     used_+=1;
+}
+
+bool BombPlant::isoffensive() const
+{
+    return true;
 }
 
 int BombPlant::showused()
@@ -226,6 +236,11 @@ void CoinPlant::showskill() const
     cout << " (" << time_ << " more visits)";
 }
 
+bool CoinPlant::isoffensive() const
+{
+    return false;
+}
+
 void CoinPlant::print()
 {
     cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives $" << reward_ << " every " << maxtime_ << " rounds";
@@ -255,6 +270,11 @@ int HealPlant::visit()
 int HealPlant::get()
 {
     return healpoint_;
+}
+
+bool HealPlant::isoffensive() const
+{
+    return false;
 }
 
 void HealPlant::print()

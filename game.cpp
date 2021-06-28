@@ -186,6 +186,8 @@ void Game::gameloop(void)
             //     m->
             // }
         }
+        system("pause");
+        system("cls");
 
         // zombie move
         int deadzombie = 0;
@@ -210,15 +212,11 @@ void Game::gameloop(void)
                             std::cout << "Zombie eats plant " << m->PlantName(m->ZombiePosition(i)) << " and causes damage 15." << std::endl;
                             m->ZAttackP(m->ZombiePosition(i), i);
                         }
-                        else if (m->B_Used() >= m->Zombiecnt())
-                        {
-                            gamestatus = 2;
-                            break;
-                        }
                     }
                     else
                     {
                         std::cout << "Zombie is killed!" << std::endl;
+                        ++deadzombie;
                     }
 
                     if (m->LandisEmpty(m->ZombiePosition(i)))
@@ -230,7 +228,14 @@ void Game::gameloop(void)
                             break;
                         }
                     }
+                    if (m->B_Used() >= m->Zombiecnt())
+                    {
+                        gamestatus = 2;
+                        break;
+                    }
                 }
+                system("pause");
+                system("cls");
             }
             else
             {
