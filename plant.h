@@ -13,6 +13,8 @@ public:
     int showatk() const;
     virtual void showskill() const;
     virtual int visit();
+    virtual bool isready() const;
+    virtual int get();
     int attack();
     void attacked(int atk);
     void healed();
@@ -65,8 +67,8 @@ public:
     static void set(std::string name, int cost, int hp, int time, int coin);
     CoinPlant();
     virtual int visit() override;
-    bool isready() const;
-    int get() ;
+    virtual bool isready() const override;
+    virtual int get() override;
     virtual void showskill() const override;
     static void print();
 private:
