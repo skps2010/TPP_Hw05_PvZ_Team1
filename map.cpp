@@ -56,17 +56,22 @@ int map::PlayerMove(const int step)
                 Cost(-status_);
             }
         }
-        if (tmp == 2) // Heal
+        else if (tmp == 2) // Heal
         {
             for (int i = 0; i < row_; i++)
             {
-                land_[i].PlantHeal();
+                if (!land_[i].isEmpty())
+                {
+                    land_[i].PlantHeal();
+                }
             }
         }
         return tmp;
     }
     else
+    {
         return -1;
+    }
 }
 
 int map::PlayerPosition()
@@ -100,13 +105,6 @@ int map::Plantcnt() const
             ++tmp;
     }
     return tmp;
-}
-
-void map::PlantHeal()
-{
-    for (int i = 0; i < row_; ++i)
-        if (!land_[i].isEmpty())
-            land_[i].PlantHeal();
 }
 
 std::ostream &operator<<(std::ostream &os, const map &out)

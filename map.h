@@ -32,11 +32,6 @@ public:
     int PlayerCoin() const { return player_.Coin(); }
     void Cost(const int m) { player_.Cost(m); }
 
-    void S_Print() const {};
-    void B_Print() const {};
-    void C_Print() const {};
-    void H_Print() const {};
-
     void S_Init(std::string name, int cost, int hp, int atk) { ShootPlant::set(name, cost, hp, atk); }
     void B_Init(std::string name, int cost, int hp) { BombPlant::set(name, cost, hp); };
     void C_Init(std::string name, int cost, int hp, int time, int coin) { CoinPlant::set(name, cost, hp, time, coin); };
@@ -71,7 +66,6 @@ public:
 
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);
-    void PlantHeal();
     int Plantcnt() const;
 
 private:
