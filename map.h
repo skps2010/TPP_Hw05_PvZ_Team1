@@ -30,7 +30,7 @@ public:
     int PlayerMove(const int step);
     int PlayerPosition();
     int PlayerCoin() const { return player_.Coin(); }
-    int Cost(const int m);
+    void Cost(const int m) { player_.Cost(m); }
 
     void S_Print() const {};
     void B_Print() const {};
