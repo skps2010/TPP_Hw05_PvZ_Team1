@@ -25,6 +25,7 @@ public:
     int PlantVisit() { p->visit(); } //1: Coin 2: Heal
     bool PlantisReady() const { p->isready(); }
     int PlantGet() { p->get(); } //1:
+    bool isOffensive() const { p->isoffensive(); }
 
 private:
     plant *p = nullptr;
