@@ -4,6 +4,8 @@
 
 using namespace std;
 
+//static*************************************************************************
+
 int plant::healpoint_ = 20;
 
 string ShootPlant::name_ = "Hornflower";
@@ -39,6 +41,8 @@ int HealPlant::cost_ = 25;
 int HealPlant::maxhp_ = 50;
 
 int HealPlant::healpoint_ = 20;
+
+//plant************************************************************************************************************************
 
 plant::plant(string name,int cost,int maxhp,int atk) :name_(name), cost_(cost), maxhp_(maxhp), remainhp_(maxhp), atk_(atk)
 {
@@ -86,6 +90,16 @@ int plant::visit()
     return 0;
 }
 
+bool plant::isready() const
+{
+    return false;
+}
+
+int plant::get()
+{
+    return -1;
+}
+
 int plant::attack()
 {
     atk_impl();
@@ -117,6 +131,8 @@ void  plant::atk_impl()
 
 }
 
+//Shoot***************************************************************************
+
 void ShootPlant::set(string name, int cost, int hp, int atk)
 {
     name_ = name;
@@ -135,6 +151,7 @@ void ShootPlant::print()
     cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives " << atk_ << " damage points" ;
 }
 
+//Bomb*************************************************************************************************
 
 void BombPlant::set(string name,int cost, int hp)
 {
@@ -167,6 +184,8 @@ void BombPlant::atk_impl()
 {
     this->attacked(this->showhp());
 }
+
+//Coin*****************************************************************************************************
 
 void CoinPlant::set(string name, int cost, int hp, int time, int coin)
 {
@@ -212,6 +231,8 @@ void CoinPlant::print()
     cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives $" << reward_ << " every " << maxtime_ << " rounds";
 }
 
+//Heal**********************************************************************************************************************
+
 void HealPlant::set(string name, int cost, int hp, int healpoint)
 {
     name_ = name;
@@ -231,10 +252,17 @@ int HealPlant::visit()
     return 2;
 }
 
+int HealPlant::get()
+{
+    return healpoint_;
+}
+
 void HealPlant::print()
 {
     cout << name_  << " $"<< cost_ << " HP: " << maxhp_ << " - gives all your plants " << healpoint_ << " HP back";
 }
+
+//non-class**************************************************************************************************************
 
 plant* create_p(char type)
 {

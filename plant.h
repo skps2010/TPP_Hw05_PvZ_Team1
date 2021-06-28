@@ -1,10 +1,10 @@
 #ifndef plant__
 #define plant__
-#include <iostream>
+#include<iostream>
 class plant
 {
 public:
-    plant(std::string name, int cost, int maxhp, int atk);
+    plant(std::string name,int cost,int maxhp,int atk);
     virtual ~plant();
     std::string showname() const;
     int showcost() const;
@@ -13,13 +13,14 @@ public:
     int showatk() const;
     virtual void showskill() const;
     virtual int visit();
+    virtual bool isready() const;
+    virtual int get();
     int attack();
     void attacked(int atk);
     void healed();
-
 protected:
     static void sethealpoint(int healpoint);
-    virtual void atk_impl();
+    virtual void  atk_impl();
 
 private:
     std::string name_;
@@ -36,7 +37,6 @@ public:
     static void set(std::string name, int cost, int hp, int atk);
     ShootPlant();
     static void print();
-
 private:
     static std::string name_;
     static int cost_;
@@ -47,15 +47,13 @@ private:
 class BombPlant : public plant
 {
 public:
-    static void set(std::string name, int cost, int hp);
+    static void set(std::string name,int cost, int hp);
     BombPlant();
-    ~BombPlant();
-    static int showused();
+    ~BombPlant() ;
+    static int showused() ;
     static void print();
-
 protected:
-    virtual void atk_impl() override;
-
+    virtual void  atk_impl() override;
 private:
     static std::string name_;
     static int cost_;
@@ -69,11 +67,10 @@ public:
     static void set(std::string name, int cost, int hp, int time, int coin);
     CoinPlant();
     virtual int visit() override;
-    bool isready() const;
-    int get();
+    virtual bool isready() const override;
+    virtual int get() override;
     virtual void showskill() const override;
     static void print();
-
 private:
     static std::string name_;
     static int cost_;
@@ -89,8 +86,8 @@ public:
     static void set(std::string name, int cost, int hp, int healpoint);
     HealPlant();
     virtual int visit() override;
+    virtual int get() override;
     static void print();
-
 private:
     static std::string name_;
     static int cost_;
@@ -98,14 +95,15 @@ private:
     static int healpoint_;
 };
 
-plant *create_p(char type);
+plant* create_p(char type);
 
-plant &create_r(char type);
+plant& create_r(char type);
 
-bool alive(const plant &pl);
+bool alive (const plant& pl);
 
-std::ostream &operator<<(std::ostream &os, const plant &rhs);
+std::ostream & operator << (std::ostream &os, const plant &rhs);
 
 void show(char type);
+
 
 #endif

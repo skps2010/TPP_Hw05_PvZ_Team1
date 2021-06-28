@@ -12,7 +12,7 @@ Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10), las
 {
     srand(time(NULL));
     // init the map
-    logo();
+    // logo();
     m = new map(setNumberOfLand(), setNumberOfZombie());
     rule();
     m->PlayerMove(rolldice(1, m->Landcnt()));
@@ -20,6 +20,7 @@ Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10), las
     {
         m->ZombieMove(i, rolldice(1, m->Landcnt()));
     }
+
     // read file
     std::ifstream ifs;
     ifs.open("plants.txt");
@@ -174,8 +175,16 @@ void Game::gameloop(void)
                 std::cout << "You do not have enough money to plant anything!" << std::endl;
             }
         }
-        else // plant
+        else
         {
+            if (m->PlantisReady(m->PlayerPosition()))
+            {
+                std::cout << "You have earned $" << m->PlantStatus(m->PlayerPosition()) << "! Now you have $" << m->PlayerCoin() << "." << std::endl;
+            }
+            // else
+            // {
+            //     m->
+            // }
         }
 
         // zombie move
