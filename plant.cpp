@@ -141,6 +141,11 @@ void ShootPlant::set(string name, int cost, int hp, int atk)
     atk_ = atk;
 }
 
+int ShootPlant::showcost()
+{
+    return cost_;
+}
+
 ShootPlant::ShootPlant(): plant(name_,cost_,maxhp_,atk_)
 {
 
@@ -163,6 +168,11 @@ void BombPlant::set(string name,int cost, int hp)
     name_ = name;
     cost_ = cost;
     maxhp_ = hp;
+}
+
+int BombPlant::showcost()
+{
+    return cost_;
 }
 
 BombPlant::BombPlant(): plant(name_,cost_,maxhp_,maxhp_)
@@ -204,6 +214,11 @@ void CoinPlant::set(string name, int cost, int hp, int time, int coin)
     maxhp_ = hp;
     maxtime_ = time;
     reward_ = coin;
+}
+
+int CoinPlant::showcost()
+{
+    return cost_;
 }
 
 CoinPlant::CoinPlant() : plant(name_,cost_,maxhp_,0)
@@ -255,6 +270,11 @@ void HealPlant::set(string name, int cost, int hp, int healpoint)
     maxhp_ = hp;
     healpoint_ = healpoint;
     sethealpoint(healpoint);
+}
+
+int HealPlant::showcost()
+{
+    return cost_;
 }
 
 HealPlant::HealPlant() : plant(name_,cost_,maxhp_,0)
@@ -359,4 +379,25 @@ void show(char type)
         HealPlant::print();
         break;
     }
+}
+
+int showcost(char type)
+{
+    int cost = 0;
+    switch(type)
+    {
+    case 'S':
+        cost = ShootPlant::showcost();
+        break;
+    case 'B':
+        cost = BombPlant::showcost();
+        break;
+    case 'C':
+        cost = CoinPlant::showcost();
+        break;
+    case 'H':
+        cost = HealPlant::showcost();
+        break;
+    }
+    return cost;
 }

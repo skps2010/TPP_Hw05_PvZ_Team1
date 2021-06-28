@@ -36,6 +36,7 @@ class ShootPlant : public plant
 {
 public:
     static void set(std::string name, int cost, int hp, int atk);
+    static int showcost();
     ShootPlant();
     virtual bool isoffensive() const override;
     static void print();
@@ -50,6 +51,7 @@ class BombPlant : public plant
 {
 public:
     static void set(std::string name,int cost, int hp);
+    static int showcost();
     BombPlant();
     ~BombPlant() ;
     virtual bool isoffensive() const override;
@@ -68,6 +70,7 @@ class CoinPlant : public plant
 {
 public:
     static void set(std::string name, int cost, int hp, int time, int coin);
+    static int showcost();
     CoinPlant();
     virtual int visit() override;
     virtual bool isready() const override;
@@ -88,6 +91,7 @@ class HealPlant : public plant
 {
 public:
     static void set(std::string name, int cost, int hp, int healpoint);
+    static int showcost();
     HealPlant();
     virtual int visit() override;
     virtual int get() override;
@@ -109,6 +113,8 @@ bool alive (const plant& pl);
 std::ostream & operator << (std::ostream &os, const plant &rhs);
 
 void show(char type);
+
+int showcost(char type);
 
 
 #endif
