@@ -8,7 +8,7 @@
 #include "land.h"
 #include "zombie.h"
 
-Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10), lastDecision(0)
+Game::Game() : DEFAULTLAND(8), MAXLAND(10), DEFAULTZOMBIE(3), MAXZOMBIE(10), lastDecision(0), gamestatus(0)
 {
     srand(time(NULL));
     // init the map
@@ -157,17 +157,29 @@ const int Game::rolldice(const int minimum, const int maximum)
 
 void Game::gameloop(void)
 {
-    for (size_t jo = 0; jo < 5; ++jo)
+    while (1)
     {
         showMap();
         showPlants();
         std::cout << std::endl;
-        if (m->LandisEmpty(m->PlayerPosition()) && m->PlayerCoin() > 0)
+        if (m->LandisEmpty(m->PlayerPosition()))
         {
-            m->PrintPlayer();
-            makeDecision();
+            if (m->PlayerCoin() > 0)
+            {
+                m->PrintPlayer();
+                makeDecision();
+            }
+            else
+            {
+                std::cout << "You do not have enough money to plant anything!" << std::endl;
+            }
         }
+        else // plant
+        {
+        }
+
         // zombie move
+        int deadzombie = 0;
         for (size_t i = 0; i < m->Zombiecnt(); ++i)
         {
             if (!(m->ZombieisDead(i)))
@@ -184,19 +196,56 @@ void Game::gameloop(void)
                     }
                     if (!(m->ZombieisDead(i)))
                     {
-                        std::cout << "Zombie eats plant " << m->PlantName(m->ZombiePosition(i)) << " and causes damage 15." << std::endl;
-                        m->ZAttackP(m->ZombiePosition(i), i);
+                        if (!(m->LandisEmpty(m->ZombiePosition(i))))
+                        {
+                            std::cout << "Zombie eats plant " << m->PlantName(m->ZombiePosition(i)) << " and causes damage 15." << std::endl;
+                            m->ZAttackP(m->ZombiePosition(i), i);
+                        }
+                        else if (m->B_Used() >= m->Zombiecnt())
+                        {
+                            gamestatus = 2;
+                            break;
+                        }
                     }
+                    else
+                    {
+                        std::cout << "Zombie is killed!" << std::endl;
+                    }
+
                     if (m->LandisEmpty(m->ZombiePosition(i)))
                     {
                         std::cout << "Plant " << NowPlantName << " is dead!" << std::endl;
+                        if (m->Plantcnt() == 0)
+                        {
+                            gamestatus = 1;
+                            break;
+                        }
                     }
                 }
             }
+            else
+            {
+                ++deadzombie;
+            }
         }
 
-        std::cout << std::endl;
-        std::cout << std::endl;
+        if (gamestatus == 1)
+        {
+            std::cout << "Oh no... You have no plant on the map ...." << std::endl;
+            break;
+        }
+        else if (gamestatus == 2)
+        {
+            std::cout << "You lose the game since you cannot use that many bomb plants!" << std::endl;
+            break;
+        }
+
+        if (deadzombie == m->Zombiecnt())
+        {
+            std::cout << "Congratulations! You have killed all zombies!" << std::endl;
+            break;
+        }
+        m->PlayerMove(rolldice(1, 6));
     }
     return;
 }
