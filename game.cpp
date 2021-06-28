@@ -103,26 +103,44 @@ void Game::showPlants(void)
 
 void Game::makeDecision(void)
 {
-    std::cout << "Enter your choice (" << dictionary.size() << " to give up, default: " << lastDecision << ")...>";
-    int decision = 0;
-    std::cin >> decision;
-    if (decision > dictionary.size() || decision < 0)
+    while (1)
     {
-        std::cout << "Wrong input! Set your decision as default!" << std::endl;
-        decision = lastDecision;
-    }
-    else
-    {
-        lastDecision = decision;
-    }
-    if (decision != dictionary.size())
-    {
-        m->SetPlant(m->PlayerPosition(), dictionary.at(decision));
-        std::cout << "You have planted " << m->PlantName(m->PlayerPosition()) << " at land " << m->PlayerPosition() << " !" << std::endl;
-    }
-    else
-    {
-        std::cout << "You give up!" << std::endl;
+        showPlants();
+        std::cout << std::endl;
+        m->PrintPlayer();
+        std::cout << "Enter your choice (" << dictionary.size() << " to give up, default: " << lastDecision << ")...>";
+        int decision = 0;
+        std::cin >> decision;
+        std::cin.clear();
+        std::cin.ignore();
+        if (decision > dictionary.size() || decision < 0)
+        {
+            std::cout << "Wrong input! Set your decision as default!" << std::endl;
+            decision = lastDecision;
+        }
+        else
+        {
+            lastDecision = decision;
+        }
+        if (decision != dictionary.size())
+        {
+            if (m->PlantShowCost(dictionary.at(decision)) > m->PlayerCoin())
+            {
+                std::cout << "Not enough money! Please input again!" << std::endl;
+                system("pause");
+            }
+            else
+            {
+                m->SetPlant(m->PlayerPosition(), dictionary.at(decision));
+                std::cout << "You have planted " << m->PlantName(m->PlayerPosition()) << " at land " << m->PlayerPosition() << " !" << std::endl;
+                break;
+            }
+        }
+        else
+        {
+            std::cout << "You give up!" << std::endl;
+            break;
+        }
     }
     return;
 }
@@ -165,9 +183,6 @@ void Game::gameloop(void)
         {
             if (m->PlayerCoin() > 0)
             {
-                showPlants();
-                std::cout << std::endl;
-                m->PrintPlayer();
                 makeDecision();
             }
             else
