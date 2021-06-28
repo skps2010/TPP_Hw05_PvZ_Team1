@@ -56,8 +56,9 @@ public:
     int PlantHP(int row) const { return land_[row].PlantHP(); }
     int PlantDP(int row) const { return land_[row].PlantDP(); }
     void PlantHurt(int row, int hp) { land_[row].PlantHurt(hp); }
-    int PlantStatus(int row) { return land_[row].PlantGet(); }
     bool PlantisReady(int row) { return land_[row].PlantisReady(); }
+    int PlantVisit(int row) { return land_[row].PlantVisit(); }
+    int PlantStatus(int row) { return land_[row].PlantGet(); }
     // HealPlant: Heal point
     // CoinPlant: 剩餘回合(NotReady) or 拿到的錢(isReady)
 
