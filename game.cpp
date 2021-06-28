@@ -211,6 +211,12 @@ void Game::gameloop(void)
         }
         PAUSE_AND_CLEAR
 
+        if (!(m->Plantcnt()))
+        {
+            std::cout << "Oh no... You have no plant on the map ...." << std::endl;
+            break;
+        }
+
         // zombie move
         int deadzombie = 0;
         for (size_t i = 0; i < m->Zombiecnt(); ++i)
