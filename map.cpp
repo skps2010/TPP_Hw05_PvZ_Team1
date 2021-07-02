@@ -45,7 +45,33 @@ int map::ZombiePosition(const int id)
 int map::PlayerMove(const int step)
 {
     player_.Step(step, row_);
-    return player_.Position();
+    if (!land_[player_.Position()].isEmpty())
+    {
+        int tmp = land_[player_.Position()].PlantVisit();
+        PlantUpdate(player_.Position());
+        if (tmp == 1) // Coin
+        {
+            if (isready_)
+            {
+                Cost(-status_);
+            }
+        }
+        else if (tmp == 2) // Heal
+        {
+            for (int i = 0; i < row_; i++)
+            {
+                if (!land_[i].isEmpty())
+                {
+                    land_[i].PlantHeal();
+                }
+            }
+        }
+        return tmp;
+    }
+    else
+    {
+        return -1;
+    }
 }
 
 int map::PlayerPosition()
@@ -56,13 +82,29 @@ int map::PlayerPosition()
 void map::PAttackZ(int row, int zid)
 {
     int tmp = land_[row].PlantDP();
-    zombie_[zid].Hurt(tmp);
+    if (!zombie_[zid].isDead())
+        zombie_[zid].Hurt(tmp);
+    land_[row].CheckAlive();
 }
 
 void map::ZAttackP(int row, int zid)
 {
     int tmp = zombie_[zid].DamagePoint();
-    land_[row].PlantHurt(tmp);
+    if (!land_[row].isEmpty())
+    {
+        land_[row].PlantHurt(tmp);
+    }
+}
+
+int map::Plantcnt() const
+{
+    int tmp = 0;
+    for (int i = 0; i < row_; ++i)
+    {
+        if (!land_[i].isEmpty())
+            ++tmp;
+    }
+    return tmp;
 }
 
 std::ostream &operator<<(std::ostream &os, const map &out)

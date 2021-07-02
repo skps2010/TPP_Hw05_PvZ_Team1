@@ -4,6 +4,7 @@
 #include "land.h"
 #include "zombie.h"
 #include "player.h"
+#include "plant.h"
 
 class map
 {
@@ -15,25 +16,65 @@ public:
         delete[] land_;
         delete[] zombie_;
     }
-    int Landcnt() const { return row_; }
-    int Zombiecnt() const { return zombiecnt_; }
-    bool ZombieisDead(const int id) const { return zombie_[id].isDead(); }
-    int Plantcnt() const { return 0; } // not done yet
     void PrintPlayer() const;
     void PrintRow(const int i) const;
     void PrintZombie(const int id) const;
+    void PrintPlant(const char T) const { show(T); }
+
+    int Landcnt() const { return row_; }
+    int Zombiecnt() const { return zombiecnt_; }
+
+    bool ZombieisDead(const int id) const { return zombie_[id].isDead(); }
     int ZombieMove(const int id, const int step);
     int ZombiePosition(const int id);
+
     int PlayerMove(const int step);
     int PlayerPosition();
+    int PlayerCoin() const { return player_.Coin(); }
+    void Cost(const int m) { player_.Cost(m); }
+
+    void S_Init(std::string name, int cost, int hp, int atk) { ShootPlant::set(name, cost, hp, atk); }
+    void B_Init(std::string name, int cost, int hp) { BombPlant::set(name, cost, hp); };
+    void C_Init(std::string name, int cost, int hp, int time, int coin) { CoinPlant::set(name, cost, hp, time, coin); };
+    void H_Init(std::string name, int cost, int hp, int healpoint) { HealPlant::set(name, cost, hp, healpoint); }
+    int B_Used() { return BombPlant::showused(); } //炸彈炸過幾次
+
+    std::string SetPlant(int row, const char T)
+    {
+        land_[row].SetPlant(T);
+        Cost(land_[row].PlantCost());
+        return land_[row].PlantName();
+    }
+    bool LandisEmpty(int row) const { return land_[row].isEmpty(); }
+    std::string PlantName(int row) const { return land_[row].PlantName(); }
+    char PlantType(int row) const { return land_[row].PlantName()[0]; }
+    int PlantCost(int row) const { return land_[row].PlantCost(); }
+    int PlantMHP(int row) const { return land_[row].PlantMHP(); }
+    int PlantHP(int row) const { return land_[row].PlantHP(); }
+    int PlantDP(int row) const { return land_[row].PlantDP(); }
+    void PlantHurt(int row, int hp) { land_[row].PlantHurt(hp); }
+    bool PlantisReady(int row) const { return isready_; }
+    void PlantUpdate(int row)
+    {
+        isready_ = land_[row].PlantisReady();
+        status_ = land_[row].PlantGet();
+    }
+    int PlantVisit(int row) const { return land_[row].PlantVisit(); }
+    int PlantStatus(int row) { return status_; }
+    // HealPlant: Heal point
+    // CoinPlant: 剩餘回合(NotReady) or 拿到的錢(isReady)
+    bool PlantisOffensive(int row) const { return land_[row].isOffensive(); }
+
     void PAttackZ(int row, int zid);
     void ZAttackP(int row, int zid);
-    int PlayerCoin() const { return player_.Coin(); }
-    int Cost(const int m);
+    int Plantcnt() const;
+    int PlantShowCost(char T) { return showcost(T); }
 
 private:
     int row_ = 8;
     int zombiecnt_ = 3;
+    bool isready_ = false;
+    int status_ = -1;
     player player_;
     zombie *zombie_;
     land *land_;

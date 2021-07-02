@@ -1,0 +1,65 @@
+# depslib dependency file v1.0
+1624869955 source:c:\users\user\desktop\tpp_hw05_pvz_team1\land.cpp
+	<iostream>
+	"land.h"
+	"plant.h"
+
+1624868243 c:\users\user\desktop\tpp_hw05_pvz_team1\land.h
+	<iostream>
+	"plant.h"
+
+1624888822 c:\users\user\desktop\tpp_hw05_pvz_team1\plant.h
+	<iostream>
+
+1624889544 source:c:\users\user\desktop\tpp_hw05_pvz_team1\main.cpp
+	<iostream>
+	<algorithm>
+	"game.h"
+
+1624884452 c:\users\user\desktop\tpp_hw05_pvz_team1\game.h
+	<vector>
+	"map.h"
+	"land.h"
+	"zombie.h"
+
+1624888822 c:\users\user\desktop\tpp_hw05_pvz_team1\map.h
+	<iostream>
+	"land.h"
+	"zombie.h"
+	"player.h"
+	"plant.h"
+
+1624802613 c:\users\user\desktop\tpp_hw05_pvz_team1\zombie.h
+	<iostream>
+
+1624802613 c:\users\user\desktop\tpp_hw05_pvz_team1\player.h
+	<iostream>
+
+1624886134 source:c:\users\user\desktop\tpp_hw05_pvz_team1\map.cpp
+	<iostream>
+	"map.h"
+
+1624888822 source:c:\users\user\desktop\tpp_hw05_pvz_team1\plant.cpp
+	<string>
+	<iostream>
+	"plant.h"
+
+1624802612 source:c:\users\user\desktop\tpp_hw05_pvz_team1\player.cpp
+	<iostream>
+	"player.h"
+
+1624802613 source:c:\users\user\desktop\tpp_hw05_pvz_team1\zombie.cpp
+	<iostream>
+	"zombie.h"
+
+1624889381 source:c:\users\user\desktop\tpp_hw05_pvz_team1\game.cpp
+	<iostream>
+	<fstream>
+	<cstdlib>
+	<ctime>
+	<string>
+	"game.h"
+	"map.h"
+	"land.h"
+	"zombie.h"
+
